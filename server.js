@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import connectDB from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
+import userRouter from "./routes/userRoutes.js";
 
 // App Config
 const app = express();
@@ -18,5 +19,7 @@ app.use(cors());
 app.get("/", (req, res) => {
 	res.send("API Working");
 });
+
+app.use("/api/user", userRouter);
 
 app.listen(port, () => console.log("Srever started on port: " + port));
