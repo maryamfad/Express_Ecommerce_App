@@ -38,3 +38,6 @@ pids
 
 # Misc
 *.tgz
+
+*.http
+.http

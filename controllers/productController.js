@@ -1,5 +1,28 @@
 //function for adding product
-const addProduct = async (req, res) => {};
+const addProduct = async (req, res) => {
+	try {
+		const {
+			name,
+			description,
+			price,
+			category,
+			subCategory,
+			sizes,
+			bestseller,
+		} = req.body;
+
+		const image1 = req.files.image1 && req.files.image1[0];
+		const image2 = req.files.image2 && req.files.image2[0];
+		const image3 = req.files.image3 && req.files.image3[0];
+		const image4 = req.files.image4 && req.files.image4[0];
+
+		res.json({});
+	} catch (error) {
+		console.log("error in adding product");
+
+		res.json({ success: false, message: error.message });
+	}
+};
 
 //function for listing products
 const listProducts = async (req, res) => {};
