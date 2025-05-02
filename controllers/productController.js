@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-
+import productModel from "../models/productModel.js";
 //function for adding product
 
 const addProduct = async (req, res) => {
@@ -30,9 +30,24 @@ const addProduct = async (req, res) => {
 				return result.secure_url;
 			})
 		);
-		console.log(imagesUrl);
+		const productData = {
+			name,
+			description,
+			category,
+			subCategory,
+			price: Number(price),
+			sizes: JSON.parse(sizes),
+			bestseller: bestseller === "true" ? true : false,
+			image: imagesUrl,
+			date: Date.now(),
+		};
 
-		res.json({});
+		console.log(productData);
+
+		const product = new productModel(productData);
+		await product.save();
+
+		res.json({ success: true, message: "Product Added" });
 	} catch (error) {
 		console.log("error in adding product");
 
