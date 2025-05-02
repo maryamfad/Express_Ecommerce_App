@@ -4,6 +4,7 @@ import "dotenv/config";
 import connectDB from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
 import userRouter from "./routes/userRoutes.js";
+import productRouter from "./routes/productRoute.js";
 
 // App Config
 const app = express();
@@ -21,5 +22,5 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRouter);
-
+app.use("/api/product", productRouter);
 app.listen(port, () => console.log("Srever started on port: " + port));
