@@ -3,11 +3,12 @@ import userModel from "../models/userModel.js";
 import Stripe from "stripe";
 
 //global variables
-const currency = "csd";
+const currency = "cad";
 const deliveryCharges = 10;
 
 //gateway initialize
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
 //placing orders using COD Method
 const placeOrder = async (req, res) => {
 	try {
@@ -85,6 +86,24 @@ const placeOrderStripe = async (req, res) => {
 	}
 };
 
+const verifyStripe = async (req, res) => {
+	const { orderId, success, userId } = req.body;
+
+	try {
+		if (success === true) {
+			await orderModel.findByIdAndUpdate(orderId, { payment: true });
+			await userModel.findByIdAndUpdate(userId, { cartData: {} });
+			res.json({ success: true });
+		} else {
+			await orderModel.findByIdAndDelete(orderId);
+			res.json({ success: false });
+		}
+	} catch (error) {
+		console.log(error);
+		res.json({ success: false, message: error.message });
+	}
+};
+
 //placing orders using Razorpay Method
 const placeOrderRazorpay = async (req, res) => {};
 
@@ -130,4 +149,5 @@ export {
 	allOrders,
 	userOrders,
 	updateStatus,
+	verifyStripe,
 };
